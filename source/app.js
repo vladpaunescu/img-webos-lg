@@ -41,42 +41,46 @@ enyo.ready(function() {
     //     	}]
     // });
 
-    enyo.kind({
-        name: 'AxeView',
-        kind: 'DataRepeater',
-        components: [{
-        	components: [{ name: 'axe' },       
-        				],
-        	bindings: [
-                { from: 'model.name', to: '$.axe.content' },
-           ]
-        }]
-    });
+    // enyo.kind({
+    //     name: 'AxeView',
+    //     kind: 'DataRepeater',
+    //     components: [{
+    //     	components: [{ name: 'axe' },       
+    //     				],
+    //     	bindings: [
+    //             { from: 'model.name', to: '$.axe.content' },
+    //        ]
+    //     }]
+    // });
 
+   enyo.kind({
+        name: 'AxeView',
+        kind: 'DataList',
+        collection: null,
+		components: [
+			{kind: "moon.Item", bindings: [
+					{from: "model", to:"content"}
+				]
+			}
+			]
+    });
 
     enyo.kind({
         name: 'RepoView',
         kind: 'DataList',
         collection: collection,
-
 		components: [
-			{kind: "moon.DataGridList", fit:true, name: "resultList", minWidth: 250, minHeight: 300, ontap: "itemSelected", components: [
-				{kind: "moon.GridListImageItem", imageSizing: "cover", useSubCaption:false, centered:false, bindings: [
-					{from: "model.title", to:"caption"},
-					{from: "model.thumbnail", to:"source"}
-				]}
-			]}
-		],
-
-        // components: [{
-        // 	components: [{ name: 'name' },
-        // 			//      new AxeView({'name': 'axes'})     
-        // 				],
-        // 	bindings: [
-        //         { from: 'model.name', to: '$.name.content' },
-        //          {from: 'model.classes', to: '$.axes.collection'}
-        //    ]
-        // }]
+			// {kind: "moon.Item", bindings: [
+			// 		{from: "model.name", to:"content"}
+			// 	]
+			// },
+			{
+				kind :"AxeView",
+				bindings: [
+				{from: "model.classes", to: "collection"}
+			]
+			}
+			]
     });
 
 // enyo.ready(function() {
