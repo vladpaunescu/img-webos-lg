@@ -1,209 +1,122 @@
-/**
-	Define and instantiate your enyo.Application kind in this file.  Note,
-	application rendering should be deferred until DOM is ready by wrapping
-	it in a call to enyo.ready().
-*/
+ enyo.AjaxSource.create({ name: 'ajax' });
+var collection = new enyo.Collection({
+    source: 'ajax',
+    url: 'http://localhost:8081/api/axes/',
+    options: {parse: true},
 
-enyo.kind({
-	name: "imgrec.Application",
-	kind: "enyo.Application",
-	view: "flickr.MainView"
+    parse: function(data) {
+        console.log(data.attributes_reply.complete);
+ 		return data && data.attributes_reply.complete;
+ 	}
 });
 
-// enyo.ready(function () {
-// 	new imgrec.Application({name: "app"});
-// });
+enyo.kind({
+    name: "CategoryCollection",
+    kind: "enyo.collection",
+    options: {parse: true},
+    parse: function(data) {
+        return data && data.attributes_reply.complete;
+    }
+});
+
+enyo.kind({
+    name: "ClassifiersDataList",
+    kind: "DataList",
+    collection: collection,
+    components: [
+        {kind: "ClassifiersPanel"}
+    ]
+});
+
+enyo.kind ({
+        name: "ClassifiersPanel",
+        published: {
+            model: null,
+        },
+        components: [ 
+            {kind: "moon.Item", 'index': null, ontap: "next"}
+        ],
+        bindings: [
+        	{from: "model.name", to: "$.item.content" }
+        ]
+});
+
+enyo.kind({
+	name: "PanelsWithCarouselArranger",
+	classes: "moon enyo-fit",
+	collection: collection,
+	selectedClassifier : -1,
+
+    getSelectedClassifier: function() {
+		console.log(collection.get(selectedClassifier));
+		return collection.get(selectedClassifier).name;
+	},
+
+	components: [
+		{name: "panels", kind: "moon.Panels", arrangerKind: "CarouselArranger", classes: "enyo-fit full", components: [
+			{title: "Classifiers", components: [
+				{kind: 'ClassifiersDataList', ontap: "next"}
+			]},
+			{	selectedClassifier: "",
+				title: "Classes" + selectedClassifier, components: [
+				{kind: "moon.Item", content: "Item One", ontap: "next"},
+				{kind: "moon.Item", content: "Item Two", ontap: "next"},
+				{kind: "moon.Item", content: "Item Three", ontap: "next"},
+				{kind: "moon.Item", content: "Item Four", ontap: "next"},
+				{kind: "moon.Item", content: "Item Five", ontap: "next"}
+			]},
+			{title: "Third", components: [
+				{kind: "moon.Item", content: "Item One", ontap: "next"},
+				{kind: "moon.Item", content: "Item Two", ontap: "next"},
+				{kind: "moon.Item", content: "Item Three", ontap: "next"},
+				{kind: "moon.Item", content: "Item Four", ontap: "next"},
+				{kind: "moon.Item", content: "Item Five", ontap: "next"}
+			]},
+			{title: "Fourth", components: [
+				{kind: "moon.Item", content: "Item One", ontap: "next"},
+				{kind: "moon.Item", content: "Item Two", ontap: "next"},
+				{kind: "moon.Item", content: "Item Three", ontap: "next"},
+				{kind: "moon.Item", content: "Item Four", ontap: "next"},
+				{kind: "moon.Item", content: "Item Five", ontap: "next"}
+			]},
+			{title: "Fifth", components: [
+				{kind: "moon.Item", content: "Item One", ontap: "next"},
+				{kind: "moon.Item", content: "Item Two", ontap: "next"},
+				{kind: "moon.Item", content: "Item Three", ontap: "next"},
+				{kind: "moon.Item", content: "Item Four", ontap: "next"},
+				{kind: "moon.Item", content: "Item Five", ontap: "next"}
+			]},
+			{title: "Sixth", components: [
+				{kind: "moon.Item", content: "Item One", ontap: "next"},
+				{kind: "moon.Item", content: "Item Two", ontap: "next"},
+				{kind: "moon.Item", content: "Item Three", ontap: "next"},
+				{kind: "moon.Item", content: "Item Four", ontap: "next"},
+				{kind: "moon.Item", content: "Item Five", ontap: "next"}
+			]},
+			{title: "Seventh", components: [
+				{kind: "moon.Item", content: "Item One"},
+				{kind: "moon.Item", content: "Item Two"},
+				{kind: "moon.Item", content: "Item Three"},
+				{kind: "moon.Item", content: "Item Four"},
+				{kind: "moon.Item", content: "Item Five"}
+			]}
+		]}
+	],
+
+	next: function(inSender, inEvent) {
+		console.log("Sender ", inSender);
+		console.log("Event ", inEvent);
+		var index = inEvent.index;
+		this.selectedClassifier = index;
+
+        console.log(index, item);
+		this.$.panels.next();
+		return true;
+	}
+});
 
 
 enyo.ready(function() {
-
-    enyo.AjaxSource.create({ name: 'ajax' });
-    var collection = new enyo.Collection({
-        source: 'ajax',
-        url: 'http://localhost:8081/api/axes/',
-        options: {parse: true},
-
-        parse: function(data) {
-            console.log(data.attributes_reply.complete);
-     		return data && data.attributes_reply.complete;
-     	}
-    });
-
-
-    enyo.kind({
-        name: "CategoryCollection",
-        kind: "enyo.collection",
-        options: {parse: true},
-        parse: function(data) {
-            return data && data.attributes_reply.complete;
-        }
-    });
-
-    enyo.kind ({
-        name: 'ClassItemView',
-        model: null,
-        components: [
-             {kind: "moon.Item", name: "header"},
-        ],
-        bindings: [
-            { from: '.model.name', to: '$.header.content' }
-        ],
-    });
-
-    enyo.kind({
-        name: 'CategoryDataList',
-        kind: 'DataRepeater',
-        collection: null,
-        components: [{            
-           components: [
-             {kind: "moon.Item", name: "header"},
-            ],
-            bindings: [
-            { from: '.model.name', to: '.$.header.content' }
-            ]
-        }]
-    });
-
-    enyo.kind ({
-        name: 'CategoryView',
-        model: null,
-        components: [
-            {kind: 
-                "moon.ExpandableListItem", 
-                name: "header",  
-                content: null,
-                published: {
-                    data: null
-                },
-                components:  [
-                { kind: 'enyo.Repeater',
-                    name: "repeater",
-                    onSetupItem: "setUpItem",
-                    components: [
-                        {kind: "moon.Item"}
-                    ]
-                }
-                ],
-                setUpItem: function(inSender, inEvent) {
-                     var index = inEvent.index;
-                     var item = inEvent.item;
-                     inEvent.item.$.setContent(this.collection[index].name);
-                     console.log(this.collection);
-                },
-                dataChanged: function() {
-                   console.log(this.data.length);
-                   this.$.repeater.setCount(this.data.length);
-                   return true;
-                },
-                create: function() {
-                    this.inherited(arguments);
-                    this.$.repeater.setCount(this.data.length);
-                },
-            }
-              
-        ],
-        bindings: [
-            { from: 'model.name', to: '$.header.content' },
-            { from: 'model.classes', to: '.$.header.data' }
-        ]
-    });
-
-    enyo.kind({
-        name: 'AxesDataList',
-        kind: 'DataList',
-        collection: collection,
-        components: [
-            {kind: 'CategoryView'}
-        ]
-    });
-
-
-    new enyo.Application({ name: 'app', view: 'AxesDataList' });
-
-    collection.fetch();
-
-
-
-    // enyo.kind({
-    //     name: 'RepoView',
-    //     kind: 'DataRepeater',
-    //     collection: collection,
-    //     components: [
-    //     	{	kind: "moon.ExpandableListItem", name: "header",
-    //     		components: [{content: "Item One"}],
-    //     		bindings: [
-    //             	{ from: 'model.name', to: '$.header.content' }
-    //                  ///  from: 'model.classes', to: '$.axes'
-    //             ]
-    //     	}]
-    // });
-
-    // enyo.kind({
-    //     name: 'AxeView',
-    //     kind: 'DataRepeater',
-    //     components: [{
-    //     	components: [{ name: 'axe' },       
-    //     				],
-    //     	bindings: [
-    //             { from: 'model.name', to: '$.axe.content' },
-    //        ]
-    //     }]
-    // });
-
-  //  enyo.kind({
-  //       name: 'AxeView',
-  //       kind: 'DataList',
-  //       collection: null,
-		// components: [
-		// 	{kind: "moon.Item", bindings: [
-		// 			{from: "model", to:"content"}
-		// 		]
-		// 	}
-		// 	]
-  //   });
-
-  //   enyo.kind({
-  //       name: 'RepoView',
-  //       kind: 'DataList',
-  //       collection: collection,
-		// components: [
-		// 	// {kind: "moon.Item", bindings: [
-		// 	// 		{from: "model.name", to:"content"}
-		// 	// 	]
-		// 	// },
-		// 	{
-		// 		kind :"AxeView",
-		// 		bindings: [
-		// 		{from: "model.classes", to: "collection"}
-		// 	]
-		// 	}
-		// 	]
-  //   });
-
-// enyo.ready(function() {
-//     enyo.AjaxSource.create({ name: 'ajax' });
-//     var collection = new enyo.Collection({
-//         source: 'ajax',
-//         url: 'https://api.github.com/users/enyojs/repos'
-//     });
-
-//     enyo.kind({
-//         name: 'RepoView',
-//         kind: 'DataRepeater',
-//         collection: collection,
-//         components: [{
-//             components: [{ name: 'name' }],
-//             bindings: [
-//                 { from: 'model."full_name"', to: '$.name.content' }
-//             ]
-//         }]
-//     });
-
-//     new enyo.Application({ name: 'app', view: 'RepoView' });
-
-//     collection.fetch();
-// });
-
-
-
-});
+	collection.fetch();
+    new enyo.Application({ name: 'app', view: 'PanelsWithCarouselArranger' });
+ });
