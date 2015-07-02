@@ -10,6 +10,8 @@ var collection = new enyo.Collection({
  	}
 });
 
+var classCollection = new enyo.Collection();
+
 enyo.kind({
     name: "CategoryCollection",
     kind: "enyo.collection",
@@ -34,7 +36,32 @@ enyo.kind ({
             model: null,
         },
         components: [ 
-            {kind: "moon.Item", 'index': null, ontap: "next"}
+            {kind: "moon.Item", 'index': null}
+        ],
+        bindings: [
+        	{from: "model.name", to: "$.item.content" }
+        ]
+});
+
+enyo.kind({
+    name: "ClassesDataList",
+    kind: "DataList",
+    collection: classCollection,
+    components: [
+        {kind: "ClassesPanel"}
+    ]
+});
+
+{"id":0,"width":null,"height":null,"mime":null,"maxItems":100,"queryType":"3","classes":[{"attributeId"
+:2,"classId":"1"}],"data":null}
+
+enyo.kind ({
+        name: "ClassesPanel",
+        published: {
+            model: null,
+        },
+        components: [ 
+            {kind: "moon.Item", 'index': null}
         ],
         bindings: [
         	{from: "model.name", to: "$.item.content" }
@@ -51,17 +78,18 @@ enyo.kind({
 	},
 
 	components: [
-		{name: "panels", kind: "moon.Panels", 
-		selectedClassifier: null,
-		arrangerKind: "CarouselArranger", classes: "enyo-fit full", published: {selectedClassifier: -1},
+		{name: "panels", kind: "moon.Panels",	
+		arrangerKind: "CarouselArranger", classes: "enyo-fit full",
 		components: [
-			{title: "Classifiers", components: [
-				{kind: 'ClassifiersDataList', ontap: "next"}
+			{title: "Classifiers", name: "classifiersPanel", components: [
+				{kind: 'ClassifiersDataList', ontap: "next"},
 			]},
 			{				
-				title: "Classes", components: [
-				{kind: "moon.Item", content: "Item One", ontap: "next"},
-			]},
+				title: "Classes", name: "classesPanel", kind: "moon.Panel",
+				components: [
+				{kind: "ClassesDataList", ontap: "next"}
+				]
+		},
 			{title: "Third", components: [
 				{kind: "moon.Item", content: "Item One", ontap: "next"},
 				{kind: "moon.Item", content: "Item Two", ontap: "next"},
@@ -69,10 +97,8 @@ enyo.kind({
 				{kind: "moon.Item", content: "Item Four", ontap: "next"},
 				{kind: "moon.Item", content: "Item Five", ontap: "next"}
 			]}
-		]}
-	],
-	bindings : [
-		{from: "selectedClassifier", to: "$.panels.selectedClassifier"}
+		]
+		}
 	],
 
 	next: function(inSender, inEvent) {
@@ -81,9 +107,13 @@ enyo.kind({
 		var index = inEvent.index;
         if (this.$.panels.getIndex() == 0) {
         	// first panel
-        	this.selectedClassifier = this.get("collection").at(index);
+        	this.set("selectedClassifier", this.get("collection").at(index));
         	console.log("Selected classifier is ", this.selectedClassifier);
         	this.$.panels.getPanels()[1].set("title", this.selectedClassifier.get("name"));
+        	console.log(this.selectedClassifier.get("classes"));
+        	classCollection.add(this.selectedClassifier.get("classes"));
+        	console.log("Class collection ", classCollection);
+        	this.$.panels.getPanels()[1].render();
         }
 		this.$.panels.next();
 		return true;
