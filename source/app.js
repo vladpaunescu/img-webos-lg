@@ -44,26 +44,23 @@ enyo.kind ({
 enyo.kind({
 	name: "PanelsWithCarouselArranger",
 	classes: "moon enyo-fit",
-	collection: collection,
-	selectedClassifier : -1,
-
-    getSelectedClassifier: function() {
-		console.log(collection.get(selectedClassifier));
-		return collection.get(selectedClassifier).name;
+	published: {
+		collection: collection,
+		selectedClassifier : null,
+		currentIndex: -1
 	},
 
 	components: [
-		{name: "panels", kind: "moon.Panels", arrangerKind: "CarouselArranger", classes: "enyo-fit full", components: [
+		{name: "panels", kind: "moon.Panels", 
+		selectedClassifier: null,
+		arrangerKind: "CarouselArranger", classes: "enyo-fit full", published: {selectedClassifier: -1},
+		components: [
 			{title: "Classifiers", components: [
 				{kind: 'ClassifiersDataList', ontap: "next"}
 			]},
-			{	selectedClassifier: "",
-				title: "Classes" + selectedClassifier, components: [
+			{				
+				title: "Classes", components: [
 				{kind: "moon.Item", content: "Item One", ontap: "next"},
-				{kind: "moon.Item", content: "Item Two", ontap: "next"},
-				{kind: "moon.Item", content: "Item Three", ontap: "next"},
-				{kind: "moon.Item", content: "Item Four", ontap: "next"},
-				{kind: "moon.Item", content: "Item Five", ontap: "next"}
 			]},
 			{title: "Third", components: [
 				{kind: "moon.Item", content: "Item One", ontap: "next"},
@@ -71,45 +68,23 @@ enyo.kind({
 				{kind: "moon.Item", content: "Item Three", ontap: "next"},
 				{kind: "moon.Item", content: "Item Four", ontap: "next"},
 				{kind: "moon.Item", content: "Item Five", ontap: "next"}
-			]},
-			{title: "Fourth", components: [
-				{kind: "moon.Item", content: "Item One", ontap: "next"},
-				{kind: "moon.Item", content: "Item Two", ontap: "next"},
-				{kind: "moon.Item", content: "Item Three", ontap: "next"},
-				{kind: "moon.Item", content: "Item Four", ontap: "next"},
-				{kind: "moon.Item", content: "Item Five", ontap: "next"}
-			]},
-			{title: "Fifth", components: [
-				{kind: "moon.Item", content: "Item One", ontap: "next"},
-				{kind: "moon.Item", content: "Item Two", ontap: "next"},
-				{kind: "moon.Item", content: "Item Three", ontap: "next"},
-				{kind: "moon.Item", content: "Item Four", ontap: "next"},
-				{kind: "moon.Item", content: "Item Five", ontap: "next"}
-			]},
-			{title: "Sixth", components: [
-				{kind: "moon.Item", content: "Item One", ontap: "next"},
-				{kind: "moon.Item", content: "Item Two", ontap: "next"},
-				{kind: "moon.Item", content: "Item Three", ontap: "next"},
-				{kind: "moon.Item", content: "Item Four", ontap: "next"},
-				{kind: "moon.Item", content: "Item Five", ontap: "next"}
-			]},
-			{title: "Seventh", components: [
-				{kind: "moon.Item", content: "Item One"},
-				{kind: "moon.Item", content: "Item Two"},
-				{kind: "moon.Item", content: "Item Three"},
-				{kind: "moon.Item", content: "Item Four"},
-				{kind: "moon.Item", content: "Item Five"}
 			]}
 		]}
+	],
+	bindings : [
+		{from: "selectedClassifier", to: "$.panels.selectedClassifier"}
 	],
 
 	next: function(inSender, inEvent) {
 		console.log("Sender ", inSender);
 		console.log("Event ", inEvent);
 		var index = inEvent.index;
-		this.selectedClassifier = index;
-
-        console.log(index, item);
+        if (this.$.panels.getIndex() == 0) {
+        	// first panel
+        	this.selectedClassifier = this.get("collection").at(index);
+        	console.log("Selected classifier is ", this.selectedClassifier);
+        	this.$.panels.getPanels()[1].set("title", this.selectedClassifier.get("name"));
+        }
 		this.$.panels.next();
 		return true;
 	}
