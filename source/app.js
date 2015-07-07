@@ -1,67 +1,82 @@
 enyo.AjaxSource.create({ name: 'ajax' });
 
 // enyo.AjaxSource.create({name: 'ajaxPost', 
-// 	requestKind: enyo.kind({
-// 		kind:"enyo.Ajax",
-// 		method: "POST",
-// 		postBody: null
-// 	})
+//  requestKind: enyo.kind({
+//      kind:"enyo.Ajax",
+//      method: "POST",
+//      postBody: null
+//  })
 // });
 
-var params = {
-	id: 0,
-  //   width: null,
-  //   height: null,
-  //   mime: null,
-  //   maxItems: 100,
-  //   queryType: 3,
-  //   data: null,
-  //   classes: [{
- 	// 	attributeId: 2,
- 	// 	classId: 1
- 	// }
- 	// ],
- 	// data: null
-};
 
 
 
-var work = function () {
-    
-    var serviceUrl = "http://localhost:8081/api/query/";
+// var aj = new enyo.Ajax({method: "POST"}).go({
+//  item1: "value1",
+//  item2: "value2"
+// });
 
-    var ajax = new enyo.Ajax({
-        url: serviceUrl,
-        method: 'POST',
-        handleAs: "json",
-        contentType: "application/json",
-        postBody: "id=0"
-    });
-    ajax.go();
-    ajax.response(this, "processResponse");
-    // ajax.error(this, "processError");
-};
-var processResponse = function (inSender, inResponse) {
-    alert("sucess" + inResponse);
-};
-// var processError = function (inSender, inResponse) {
-//     alert("Error!");
-// }
+// var work = function () {
 
-work();
+//  var params = {
+//  id: 0,
+//     width: null,
+//     height: null,
+//     mime: null,
+//     maxItems: 100,
+//     queryType: 3,
+//     data: null,
+//     classes: [{
+//          attributeId: 2,
+//          classId: 1
+//      }
+//      ],
+//      data: null
+// };
+
+ // params = 'test_key=' + 'test_value';
+ //                                        var request = new enyo.Ajax({
+ //                                            url: '/',
+ //                                            method: "POST",
+ //                                            postBody: params
+ //                                        });
+ //                                        request.go();        
+//     console.log(JSON.stringify(params));
+//     var serviceUrl = "http://localhost:8081/api/query/";
+
+//     var ajax = new enyo.Ajax({
+//      //
+//         url: serviceUrl,
+//         'Access-Control-Allow-Origin': false,
+//         method: 'POST',
+//         postBody: params,
+//         contentType: "application/json",
+//     });
+//     ajax.go();
+//     ajax.response(this, "processResponse");
+//     // ajax.error(this, "processError");
+// };
+// var processResponse = function (inSender, inResponse) {
+//     alert("sucess" + inResponse);
+// };
+// // var processError = function (inSender, inResponse) {
+// //     alert("Error!");
+// // }
+
+// work();
 
 // // var postAjax = new enyo.Ajax({
-// // 	url: 'http://localhost:8081/api/query/'',
-// // 	method: "POST",
-// // 	postBody: "id=0"
-// // 	});
+// //   url: 'http://localhost:8081/api/query/'',
+// //   method: "POST",
+// //   postBody: "id=0"
+// //   });
 
 // postAjax.response("processResponse");
 
 // function processResponse(inSender, inResponse) {
-// 	console.log("AjaxPost");
-// 	console.log(inSender);
-// 	console.log(inResponse);
+//  console.log("AjaxPost");
+//  console.log(inSender);
+//  console.log(inResponse);
 // }
 // postAjax.go({});
 
@@ -69,27 +84,27 @@ work();
 
 
 // var ajax = new enyo.Ajax({
-// 			url: this.$.baseUrl.getValue()
-// 		});
-// 		// send parameters the remote service using the 'go()' method
-// 		ajax.go({
-// 			q: this.$.query.getValue()
-// 		});
-// 		// attach responders to the transaction object
-// 		ajax.response(this, "processResponse");
-// 		// handle error
-// 		ajax.error(this, "processError");
-// 	},
-// 	processResponse: function(inSender, inResponse) {
-// 		// do something with it
-// 		this.$.textArea.setValue(JSON.stringify(inResponse, null, 2));
-// 	},
-// 	processError: function(inSender, inResponse) {
-// 		var errorLog = "Error" + ": " + inResponse + "! " + (JSON.parse(inSender.xhrResponse.body)).error.description;
-// 		this.$.textArea.setValue(JSON.stringify(inSender.xhrResponse, null, 2));
-// 		this.$.basicPopup.setContent(errorLog);
-// 		this.$.basicPopup.show();
-// 	}
+//          url: this.$.baseUrl.getValue()
+//      });
+//      // send parameters the remote service using the 'go()' method
+//      ajax.go({
+//          q: this.$.query.getValue()
+//      });
+//      // attach responders to the transaction object
+//      ajax.response(this, "processResponse");
+//      // handle error
+//      ajax.error(this, "processError");
+//  },
+//  processResponse: function(inSender, inResponse) {
+//      // do something with it
+//      this.$.textArea.setValue(JSON.stringify(inResponse, null, 2));
+//  },
+//  processError: function(inSender, inResponse) {
+//      var errorLog = "Error" + ": " + inResponse + "! " + (JSON.parse(inSender.xhrResponse.body)).error.description;
+//      this.$.textArea.setValue(JSON.stringify(inSender.xhrResponse, null, 2));
+//      this.$.basicPopup.setContent(errorLog);
+//      this.$.basicPopup.show();
+//  }
 // });
 
 
@@ -103,86 +118,63 @@ work();
 //             request.go();
 //         };
 
-// var collection = new enyo.Collection({
-//     source: 'ajax',
-//     url: 'http://localhost:8081/api/axes/',
-//     options: {parse: true},
-
-//     parse: function(data) {
-//         console.log(data.attributes_reply.complete);
-//  		return data && data.attributes_reply.complete;
-//  	}
-// });
-
 
 // {"id":0,"width":null,"height":null,"mime":null,"maxItems":100,"queryType":"3","classes":[{"attributeId"
 // :2,"classId":"1"}],"data":null}
 
-// var classCollection = new enyo.Collection();
+// enyo.kind({
+//  name: "QueryCollection",
+//  kind: "enyo.Collection",
+//  source: 'ajaxPost',
 
-enyo.kind({
-	name: "QueryCollection",
-	kind: "enyo.Collection",
-	source: 'ajaxPost',
+//     url: 'http://localhost:8081/api/query/',
+//     options: {parse: true, method: "POST"},
 
-    url: 'http://localhost:8081/api/query/',
-    options: {parse: true, method: "POST"},
+//     id: 0,
+//     width: null,
+//     height: null,
+//     mime: null,
+//     maxItems: 100,
+//     queryType: 3,
+//     data: null,
 
-    id: 0,
-    width: null,
-    height: null,
-    mime: null,
-    maxItems: 100,
-    queryType: 3,
-    data: null,
+//     parse: function(data) {
+//         console.log(data.image_query_reply);
+//          return data && data.image_query_reply;
+//      },
 
-    parse: function(data) {
-        console.log(data.image_query_reply);
- 		return data && data.image_query_reply;
- 	},
+//  fetch: function(opts) {
+//          this.params = {
+//              id: this.id,
+//              width: this.width,
+//              height: this.height,
+//              mime: this.mime,
+//              maxItems: this.maxItems,
+//              queryType: this.queryType,
+//              classes: [{
+//                  attributeId: this.attributeId,
+//                  classId: this.classId
+//              }
+//              ],
+//              data: this.data
+//          };
+//          this.inherited(arguments);
+//      }
+// });
 
-	fetch: function(opts) {
- 		this.params = {
- 			id: this.id,
- 			width: this.width,
- 			height: this.height,
- 			mime: this.mime,
- 			maxItems: this.maxItems,
- 			queryType: this.queryType,
- 			classes: [{
- 				attributeId: this.attributeId,
- 				classId: this.classId
- 			}
- 			],
- 			data: this.data
- 		};
- 		this.inherited(arguments);
- 	}
-});
-
-var queryCollection = new QueryCollection({
-	attributeId: 2,
-	classId: 1
-})
-queryCollection.fetch()
-
-enyo.kind({
-    name: "CategoryCollection",
-    kind: "enyo.collection",
+var classifiresCollection = new enyo.Collection({
+    source: 'ajax',
+    url: 'http://localhost:8081/api/axes/',
     options: {parse: true},
+
     parse: function(data) {
+        console.log(data.attributes_reply.complete);
         return data && data.attributes_reply.complete;
     }
 });
 
-enyo.kind({
-    name: "ClassifiersDataList",
-    kind: "DataList",
-    collection: collection,
-    components: [
-        {kind: "ClassifiersPanel"}
-    ]
-});
+
+var classCollection = new enyo.Collection();
 
 enyo.kind ({
         name: "ClassifiersPanel",
@@ -193,8 +185,22 @@ enyo.kind ({
             {kind: "moon.Item", 'index': null}
         ],
         bindings: [
-        	{from: "model.name", to: "$.item.content" }
+            {from: "model.name", to: "$.item.content" }
         ]
+});
+
+
+enyo.kind({
+    name: "ClassifiersDataList",
+    kind: "DataList",
+    collection: classifiresCollection,
+    components: [
+        {kind: "ClassifiersPanel"}
+    ],
+
+    collectionChanged: function(oldVal) {
+        console.log("Coll changed ", this.collection);
+    }
 });
 
 enyo.kind({
@@ -207,7 +213,6 @@ enyo.kind({
 });
 
 
-
 enyo.kind ({
         name: "ClassesPanel",
         published: {
@@ -217,66 +222,176 @@ enyo.kind ({
             {kind: "moon.Item", 'index': null}
         ],
         bindings: [
-        	{from: "model.name", to: "$.item.content" }
+            {from: "model.name", to: "$.item.content" }
         ]
 });
 
+var params = {
+    id: 0,
+    width: null,
+    height: null,
+    mime: null,
+    maxItems: 100,
+    queryType: 3,
+    data: null,
+    classes: [{
+         attributeId: -1,
+         classId: -1
+     }
+     ],
+     data: null
+};
+
+var ajax = new enyo.Ajax({
+     //
+        url: 'http://localhost:8081/api/query/',
+        method: 'POST',
+        postBody: params,
+        contentType: "application/json",
+});
+
+var imagesCollection = new enyo.Collection();
+var targetPrefix = null;
+
+enyo.kind ({
+        kind: "moon.Panel",
+        name: "ImagesPanel",
+        published: {
+            targetPrefix: null,
+            items: imagesCollection
+        },
+
+        targetPrefixChanged: function(oldValue) {
+            console.log("Target prefix changed ", this.targetPrefix);
+        },
+        itemsChanged: function(oldValue) {
+            console.log("items changed ", this.items);
+        },
+
+
+    components: [
+            {kind: "moon.DataGridList", fit:true, 
+            targetPrefix: null, name: "resultList", minWidth: 250, minHeight: 300, ontap: "itemSelected", components: [
+                {kind: "moon.GridListImageItem", imageSizing: "cover", useSubCaption:false, centered:false, bindings: [
+                    {from: "model.uri", to:"source", 
+                    transform: function(value) {
+                        console.log("Value ", value);
+                        return targetPrefix + value;
+                    }
+                }
+                ]}
+            ]}
+        ],
+
+    bindings: [
+        {from: "items", to: "$.resultList.collection"},
+        {from: "targetPrefix", to: "$.resultList.targetPrefix"},
+    ]
+});
+
+
 enyo.kind({
-	name: "PanelsWithCarouselArranger",
-	classes: "moon enyo-fit",
-	published: {
-		collection: collection,
-		classCollection: classCollection,
-		selectedClassifier : null,
-		selectedClass: null,
-		currentIndex: -1
-	},
+    name: "PanelsWithCarouselArranger",
+    classes: "moon enyo-fit",
+    published: {
+        axeCollection: classifiresCollection,
+        clsCollection: classCollection,
+        selectedClassifierIndex : -1,
+        selectedClassIndex: -1
+    },
+    create: function() {
+        this.inherited(arguments);
+        ajax.response(this, "processResponse");
+        ajax.error(this, "processError");
+    },
 
-	components: [
-		{name: "panels", kind: "moon.Panels",	
-		arrangerKind: "CarouselArranger", classes: "enyo-fit full",
-		components: [
-			{title: "Classifiers", name: "classifiersPanel", components: [
-				{kind: 'ClassifiersDataList', ontap: "next"},
-			]},
-			{				
-				title: "Classes", name: "classesPanel", kind: "moon.Panel",
-				components: [
-				{kind: "ClassesDataList", ontap: "next"}
-				]
-		},
-			{title: "Third", components: [
-				{kind: "moon.Item", content: "Item One", ontap: "next"},
-			]}
-		]
-		}
-	],
+    components: [
+        {
+            name: "panels", kind: "moon.Panels",    
+            arrangerKind: "CarouselArranger", classes: "enyo-fit full",
+            components: [
+                 {title: "Classifiers", name: "classifiersPanel", 
+                    components: [
+                        {kind: 'ClassifiersDataList', ontap: "next"}
+                    ]
+                },
+                {               
+                title: "Classes", name: "classesPanel", kind: "moon.Panel",
+                headerComponents: [
+                {kind: "moon.Button", small:true, name:"backButton",
+                content: "Back", ontap: "back"}
+                ],
+                components: [
+                    {kind: "ClassesDataList", ontap: "next", onkeyup: "go"}
+                    ]
+              },
+              {title: "Images", name: 'imagesPanel', kind: 'ImagesPanel',
+               onkeyup: "go" }
+           ]
+       }],
 
-	next: function(inSender, inEvent) {
-		console.log("Sender ", inSender);
-		console.log("Event ", inEvent);
-		var index = inEvent.index;
+    back: function(inSender, inEvent) {
+        console.log("Back ", inEvent);
+        this.$.panels.previous();
+        console.log("Classifeire collection ", classifiresCollection);
+        return true;
+    },
+
+    next: function(inSender, inEvent) {
+        console.log("Sender ", inSender);
+        console.log("Event ", inEvent);
+        var index = inEvent.index;
         if (this.$.panels.getIndex() == 0) {
-        	// first panel
-        	this.set("selectedClassifier", this.get("collection").at(index));
-        	console.log("Selected classifier is ", this.selectedClassifier);
-        	this.$.panels.getPanels()[1].set("title", this.selectedClassifier.get("name"));
-        	console.log(this.selectedClassifier.get("classes"));
-        	classCollection.add(this.selectedClassifier.get("classes"));
-        	console.log("Class collection ", classCollection);
-        	this.$.panels.getPanels()[1].render();
-        } else if (this.$.panel.getIndex() == 1) {
-        	this.set("selectedClass", this.get("classCollection").at(index));
-        	console.log("Selected class is ", this.selectedClass);
+            console.log("Class cllection ", classCollection);
+            console.log("Before ", classifiresCollection);
+            classifier = this.get("axeCollection").at(index);
+            this.set("selectedClassifierIndex", classifier.get("id"));
+            console.log("CLassifier classes ", classifier.get("classes"));
+            this.$.panels.getPanels()[1].set("title", classifier.get("name"));
+            classCollection.add(classifier.get("classes"));
+            console.log("After ", classifiresCollection.at(index));
+            // console.log("Class collection ", classCollection);
+            // this.$.panels.getPanels()[1].render();
+        } else if (this.$.panels.getIndex() == 1) {
+            console.log("Index ", index);
+            selectedClass = this.get("clsCollection").at(index);
+            this.set("selectedClassIndex", index);
+            console.log("Selected class is ", selectedClass);
 
+            params.classes[0].attributeId = this.selectedClassifierIndex;
+            params.classes[0].classId = this.selectedClassIndex;
+            console.log("Ajax ", ajax.get("postBody"));
+            console.log("Collections ", classifiresCollection);
+            ajax.go();
+
+
+        } else if (this.$.panels.getIndex() == 2) {
+         
+         
         }
-		this.$.panels.next();
-		return true;
-	}
+        this.$.panels.next();
+        return true;
+    },
+
+    processResponse: function (inSender, inResponse) {
+        console.log("sucess", inResponse);
+        this.$.imagesPanel.set("targetPrefix", 
+            inResponse.image_query_reply.target_prefix);
+        // targetPrefix = inResponse.image_query_reply.target_prefix;
+        targetPrefix = "http://192.168.81.80:8080/images";
+        console.log("items ", inResponse.image_query_reply.items)
+        items = this.$.imagesPanel.get("items");
+        console.log(items);
+        items.add(inResponse.image_query_reply.items);
+        // this.$.panels.getPanels()[2].render();
+    },
+    processError: function (inSender, inResponse) {
+        console.error("Ajax Error!");
+    }
 });
 
 
 enyo.ready(function() {
-	collection.fetch();
+    classifiresCollection.fetch();
     new enyo.Application({ name: 'app', view: 'PanelsWithCarouselArranger' });
  });
